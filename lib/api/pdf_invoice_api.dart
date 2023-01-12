@@ -71,7 +71,7 @@ class PdfInvoiceApi {
                   ],
                 ),
               ),
-              Text("Revision No : 1"),
+              Text("Revision No : 1",style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
             ],
           ),
           SizedBox(height: 0.5 * PdfPageFormat.cm),
@@ -293,15 +293,15 @@ class PdfInvoiceApi {
   }
 
 
-
+  TableColumnWidth defaultColumnWidth =   IntrinsicColumnWidth();
 
   static Widget buildInvoice(Invoice invoice) {
-    final headers = ['Item', 'Part No', 'Description', 'Quantity', 'Unit Price' ,'Net Price'];
+    final headers = [ 'Part No', 'Description', 'Quantity', 'Unit Price' ,'Net Price'];
     final data = invoice.items.map((item) {
       final total = item.unitPrice! * item.quantity!.toInt() * (1);
 
       return [
-         item.itemNo,
+        // item.itemNo,
         item.partNo,
         item.description,
         '${item.quantity}',
@@ -312,14 +312,17 @@ class PdfInvoiceApi {
 
     return Table.fromTextArray(
       headers: headers,
-      data: data,
-      border: null,
+     // defaultColumnWidth:IntrinsicColumnWidth(flex: 2) ,
+      data: data,border: TableBorder.all(color: PdfColors.black,width: 1),
+      cellAlignment: Alignment.center,
+
       headerStyle: TextStyle(fontWeight: FontWeight.bold),
       headerDecoration: BoxDecoration(color: PdfColors.grey300),
       cellHeight: 30,
+
       cellAlignments: {
-        0: Alignment.centerLeft,
-        1: Alignment.center,
+        0: Alignment.center ,
+        1: Alignment.topLeft,
         2: Alignment.center,
         3: Alignment.center,
         4: Alignment.center,

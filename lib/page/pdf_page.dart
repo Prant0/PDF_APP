@@ -67,7 +67,7 @@ class _PdfPageState extends State<PdfPage> {
                       height: 20,
                     ),
                     CustomeTextField(
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.newline,
                       validator: (value) {
                         if (value == null) {
                           return "Part Description required";
@@ -328,8 +328,7 @@ class _PdfPageState extends State<PdfPage> {
                   height: 20,
                 ),
                 CustomeTextField(
-                  maxLine: 5,
-                  textInputAction: TextInputAction.next,
+                  maxLine: 5,textInputAction: TextInputAction.newline,
                   //   focusNode:lastNameFocusNode,
                   validator: (value) {
                     if (value == null) {

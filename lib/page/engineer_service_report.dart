@@ -303,7 +303,7 @@ class _EngineerServiceReportState extends State<EngineerServiceReport> {
                   height: 12,
                 ),
                 CustomeTextField(
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.newline,
                   validator: (value) {
                     if (value == null) {
                       return "Job Description";
@@ -316,7 +316,7 @@ class _EngineerServiceReportState extends State<EngineerServiceReport> {
                   height: 12,
                 ),
                CustomeTextField(
-                  textInputAction: TextInputAction.next,
+                 textInputAction: TextInputAction.newline,
                   validator: (value) {
                     if (value == null) {
                       return "Engineer Report";

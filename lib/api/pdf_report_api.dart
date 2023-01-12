@@ -40,7 +40,7 @@ class PdfReportApi {
 
 
         Table.fromTextArray(
-          headers: ["CITY JOB REF:","NAME:","DATE"],
+          headers: ["CITY JOB REF:","NAME:","DATE:"],
           data: [ ["${reportModel.cityJobRef}","${reportModel.name}","${reportModel.date}"], ],
           border: TableBorder.all(color: PdfColors.black,width: 1),
           headerStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -55,7 +55,7 @@ class PdfReportApi {
           },
         ),
         Table.fromTextArray(
-          headers: ["CITY JOB : ${reportModel.clientJob} ",],
+          headers: ["CLIENT JOB : ${reportModel.clientJob} ","WARRANTY : ${reportModel.isWarrenty==true? "YES":"No"}"],
           headerAlignment:Alignment.centerLeft  ,
           data: [],
           border: TableBorder.all(color: PdfColors.black,width: 1),
@@ -70,7 +70,7 @@ class PdfReportApi {
           },
         ),
         Table.fromTextArray(
-          headers: ["CITY Name : ${reportModel.clientName} ",],
+          headers: ["CLIENT NAME : ${reportModel.clientName} ",],
           headerAlignment:Alignment.centerLeft  ,
           data: [],
           border: TableBorder.all(color: PdfColors.black,width: 1),
@@ -117,9 +117,9 @@ class PdfReportApi {
 
         Table.fromTextArray(
 
-          headers: ["REPAIR(CALL OUT)","REPAIR(NON CALL OUT)","SERVICE","INSTALLATION","WARRANTY"],
+          headers: ["REPAIR(CALL OUT)","REPAIR(NON CALL OUT)","SERVICE","INSTALLATION",],
           data: [ [reportModel.isRepairCallOut==true? "YES":"No",reportModel.isRepair2==true? "YES":"No",reportModel.isService==true? "YES":"No",
-            reportModel.isInstallation==true? "YES":"No",reportModel.isWarrenty==true? "YES":"No"
+            reportModel.isInstallation==true? "YES":"No",
           ], ],
           border: TableBorder.all(color: PdfColors.black,width: 1),
           headerStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -139,8 +139,9 @@ class PdfReportApi {
 
         Table.fromTextArray(
 
+
           headers: ["STATISTICS","START TIME","FINISH TIME","TOTAL",],
-          data: [ ["SITE TIME/TRAVEL","${reportModel.travelStartTime}","${reportModel.travelFinishTime}","${reportModel.travelFinishTime}"
+          data: [ ["SITE TIME/TRAVEL","${reportModel.travelStartTime}","${reportModel.travelFinishTime}","${reportModel.travelTotalTime}"
           ], ],
           border: TableBorder.all(color: PdfColors.black,width: 1),
           headerStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -190,7 +191,7 @@ class PdfReportApi {
           data: [],
           border: TableBorder.all(color: PdfColors.black,width: 1),
 
-          cellHeight: 80,
+          cellHeight: 50,
           cellAlignments: {
           },
         ),
@@ -229,7 +230,8 @@ class PdfReportApi {
           data: [],
           border: TableBorder.all(color: PdfColors.black,width: 1),
 
-          cellHeight: 20,
+          defaultColumnWidth:IntrinsicColumnWidth(flex: 400) ,
+
           cellAlignments: {
             0: Alignment.centerLeft,
             1: Alignment.centerLeft,
@@ -238,12 +240,13 @@ class PdfReportApi {
             4: Alignment.center,
           },
         ),Table.fromTextArray(
-          headers: ["ENGINEER SIGNATURE ","${reportModel.engineerName??"    "}","ENGINEER NAME","${reportModel.engineerName??"    "}"],
+          headers: ["ENGINEER SIGNATURE ","${reportModel.engineerName??"    "}","FULL NAME","${reportModel.engineerName??"    "}"],
           headerAlignment:Alignment.centerLeft  ,
           data: [],
           border: TableBorder.all(color: PdfColors.black,width: 1),
 
-          cellHeight: 20,
+          defaultColumnWidth:IntrinsicColumnWidth(flex: 100) ,
+
           cellAlignments: {
             0: Alignment.centerLeft,
             1: Alignment.centerLeft,
