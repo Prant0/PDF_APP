@@ -17,9 +17,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Container(
         width: double.infinity,
+        padding: EdgeInsets.only(bottom: 30),
         child: Column(
-         mainAxisAlignment: MainAxisAlignment.center,
+         mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(height: 150,),
             Image.asset("assets/log.png",height: 120,width: 120,),
             Text("City Managed",style: myStyle(30,Colors.black,FontWeight.w700),),
             SizedBox(height: 100,),
@@ -35,12 +37,37 @@ class _HomePageState extends State<HomePage> {
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>EngineerServiceReport()));},
-              child: Text("ENGINEER SERVICE REPORT",style: myStyle(16,Colors.white),),
+              child: Text("SERVICE REPORT",style: myStyle(16,Colors.white),),
               elevation: 0,
               color: Colors.deepOrange,
               minWidth: 150,
             ) ,
+            Spacer(),
+          Text('Design and Developed by "Houssam" ',style: myStyle(14,Colors.black54),),
+
           ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class MyContainer extends StatelessWidget {
+  String? text;
+    MyContainer({super.key,this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black, width: 1.0),
+      ),
+      child: Center(
+        child: Text(
+          text!,
+          textAlign: TextAlign.center,style:  TextStyle(fontSize: 9),
         ),
       ),
     );

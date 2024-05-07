@@ -14,6 +14,7 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) => ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: Size.fromHeight(40),
+          backgroundColor: Colors.green
         ),
         child: FittedBox(
           child: Text(

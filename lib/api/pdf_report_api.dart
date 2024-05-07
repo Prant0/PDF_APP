@@ -40,8 +40,8 @@ class PdfReportApi {
 
 
         Table.fromTextArray(
-          headers: ["CITY JOB REF:","NAME:","DATE:"],
-          data: [ ["${reportModel.cityJobRef}","${reportModel.name}","${reportModel.date}"], ],
+          headers: ["CITY JOB REF:", "DATE:"],
+          data: [ ["${reportModel.cityJobRef}","${reportModel.date}"], ],
           border: TableBorder.all(color: PdfColors.black,width: 1),
           headerStyle: TextStyle(fontWeight: FontWeight.bold),
           headerDecoration: BoxDecoration(color: PdfColors.grey300),
@@ -72,7 +72,7 @@ class PdfReportApi {
         Table.fromTextArray(
           headers: ["CLIENT NAME : ${reportModel.clientName} ",],
           headerAlignment:Alignment.centerLeft  ,
-          data: [],
+          data: [ ],
           border: TableBorder.all(color: PdfColors.black,width: 1),
 
           cellHeight: 20,
@@ -225,7 +225,7 @@ class PdfReportApi {
             4: Alignment.center,
           },
         ), Table.fromTextArray(
-          headers: ["CUSTOMER SIGNATURE ","${reportModel.clientName??"    "}","FULL NAME","${reportModel.clientName??"    "}"],
+          headers: ["CUSTOMER SIGNATURE ","${reportModel.customerName??"    "}","FULL NAME","${reportModel.customerName??"    "}"],
           headerAlignment:Alignment.centerLeft  ,
           data: [],
           border: TableBorder.all(color: PdfColors.black,width: 1),
@@ -261,7 +261,7 @@ class PdfReportApi {
       ],
     ));
 
-    return PdfApi.saveDocument(name: '${reportModel.clientName}.pdf', pdf: pdf);
+    return PdfApi.saveDocument(name: '${reportModel.fileName}.pdf', pdf: pdf);
   }
 
   static Widget buildHeader(Invoice invoice) => Column(

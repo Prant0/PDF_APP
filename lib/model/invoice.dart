@@ -51,8 +51,8 @@ class InvoiceItem {
 
 
 class Quotation{
-  final String ?quotationNumber,client,attentionOf,correspondingAddress,siteName,quoteDate,quoteNumber,jobDescription,jobLocation,name,position,signed,purchedOrderNumber,date;
-    Quotation({this.name,this.position,this.date,this.attentionOf,this.client,this.correspondingAddress,this.jobDescription,this.jobLocation,this.purchedOrderNumber,this.quoteDate,this.quotationNumber,this.quoteNumber,this.signed,this.siteName, });
+  final String ?quotationNumber,fileName,customerName,quotationDetails,client,attentionOf,correspondingAddress,siteName,quoteDate,quoteNumber,jobDescription,jobLocation,name,position,signed,purchedOrderNumber,date;
+    Quotation({this.quotationDetails,this.fileName,this.customerName,this.name,this.position,this.date,this.attentionOf,this.client,this.correspondingAddress,this.jobDescription,this.jobLocation,this.purchedOrderNumber,this.quoteDate,this.quotationNumber,this.quoteNumber,this.signed,this.siteName, });
 
 
 }

@@ -1,6 +1,6 @@
 class ReportModel {
   String? cityJobRef,
-      name,
+      CustomerName,
       date,
       clientJob,
       clientName,
@@ -10,14 +10,14 @@ class ReportModel {
       travelStartTime,
       travelFinishTime,
       travelTotalTime,
-      jobDescription,
+      jobDescription,fileName,
       engineerReport,extraText,partsUsedIfApplicable,customerComments,customerName,engineerName;
   bool ?isRepairCallOut,isService,isInstallation,isWarrenty,isRepair2;
 
   ReportModel(
       {this.date,this.extraText,
       this.jobDescription,
-      this.name,
+      this.CustomerName,
       this.cityJobRef,
       this.clientJob,
       this.clientName,
@@ -27,5 +27,5 @@ class ReportModel {
       this.telNo,
       this.travelFinishTime,
       this.travelStartTime,this.partsUsedIfApplicable,this.customerComments,this.engineerName,this.customerName,
-      this.travelTotalTime,this.isWarrenty,this.isInstallation,this.isRepairCallOut,this.isService,this.isRepair2});
+      this.travelTotalTime,this.fileName,this.isWarrenty,this.isInstallation,this.isRepairCallOut,this.isService,this.isRepair2});
 }

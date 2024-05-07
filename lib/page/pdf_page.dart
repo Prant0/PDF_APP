@@ -27,8 +27,10 @@ class _PdfPageState extends State<PdfPage> {
   TextEditingController purchaseOrderNumberController = TextEditingController();
   TextEditingController partNoController = TextEditingController();
   TextEditingController partDescriptionController = TextEditingController();
-  TextEditingController quantityController = TextEditingController();
+  TextEditingController quantityController = TextEditingController(text: "1");
   TextEditingController unitPriceController = TextEditingController();
+  TextEditingController quotationDetailsController = TextEditingController();
+  TextEditingController customerNameController = TextEditingController();
 
   FocusNode firstNameFocusNode = FocusNode();
   FocusNode lastNameFocusNode = FocusNode();
@@ -38,6 +40,7 @@ class _PdfPageState extends State<PdfPage> {
 
   _showMyDialog() async {
     return showDialog(
+
       context: context,
 
       //  barrierDismissible: true, // user must tap button!
@@ -49,11 +52,11 @@ class _PdfPageState extends State<PdfPage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               content: Container(
-                height: MediaQuery.of(context).size.height * 0.80,
+                height: MediaQuery.of(context).size.height * 0.70,
                 width: double.maxFinite,
                 child: ListView(
                   children: [
-                    CustomeTextField(
+                    /*CustomeTextField(
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null) {
@@ -65,7 +68,7 @@ class _PdfPageState extends State<PdfPage> {
                     ),
                     SizedBox(
                       height: 20,
-                    ),
+                    ),*/
                     CustomeTextField(
                       textInputAction: TextInputAction.newline,
                       validator: (value) {
@@ -115,12 +118,12 @@ class _PdfPageState extends State<PdfPage> {
                             itemNo: itemList.length + 1,
                             partNo: partNoController.text.toString(),
                             quantity:
-                                int.parse(quantityController.text.toString()),
+                                int.parse(quantityController.text.toString())??1,
                             unitPrice: double.parse(
                                 unitPriceController.text.toString())));
                         partNoController.clear();
                         partDescriptionController.clear();
-                        quantityController.clear();
+                       // quantityController.clear();
                         unitPriceController.clear();
                         setState(() {});
                         // Navigator.pop(context);
@@ -131,7 +134,7 @@ class _PdfPageState extends State<PdfPage> {
                       minWidth: 150,
                     ),
                     SizedBox(height: 20,),
-                    Text("Total Item : ${itemList.length}",style: myStyle(18,Colors.deepOrange),),
+                    Text("Total Item : ${itemList.length}",style: myStyle(16,Colors.deepOrange),),
                     SizedBox(height: 20,),
 
                     ListView.builder(
@@ -142,7 +145,7 @@ class _PdfPageState extends State<PdfPage> {
                         return Container(
                           margin: EdgeInsets.only(bottom: 10),
                           padding:
-                              EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                              EdgeInsets.symmetric(horizontal: 2, vertical: 0),
                           decoration: BoxDecoration(
                               color: Colors.deepOrange.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(8)),
@@ -268,7 +271,7 @@ class _PdfPageState extends State<PdfPage> {
                   height: 20,
                 ),
                 CustomeTextField(
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.newline,
                   //   focusNode:lastNameFocusNode,
                   validator: (value) {
                     if (value == null) {
@@ -285,7 +288,7 @@ class _PdfPageState extends State<PdfPage> {
                   height: 20,
                 ),
                 CustomeTextField(
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.newline,
                   //   focusNode:lastNameFocusNode,
                   validator: (value) {
                     if (value == null) {
@@ -313,7 +316,7 @@ class _PdfPageState extends State<PdfPage> {
                   height: 20,
                 ),
                 CustomeTextField(
-                  keyType: TextInputType.number,
+                //  keyType: TextInputType.number,
                   textInputAction: TextInputAction.next,
                   //   focusNode:lastNameFocusNode,
                   validator: (value) {
@@ -351,6 +354,20 @@ class _PdfPageState extends State<PdfPage> {
                   },
                   controller: jobLocationController,
                   hintText: "Job Location",
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomeTextField(
+                  textInputAction: TextInputAction.newline,
+                  //   focusNode:lastNameFocusNode,
+                  validator: (value) {
+                    if (value == null) {
+                      return "Quotation Details";
+                    }
+                  },
+                  controller: quotationDetailsController,
+                  hintText: "Quotation Details",
                 ),
 
                 /*TitleWidget(
@@ -428,6 +445,20 @@ class _PdfPageState extends State<PdfPage> {
                         ),
                         CustomeTextField(
                           textInputAction: TextInputAction.next,
+
+                          validator: (value) {
+                            if (value == null) {
+                              return "Customer Name / Sign";
+                            }
+                          },
+                          controller: customerNameController,
+                          hintText: "Customer Name / Sign",
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        CustomeTextField(
+                          textInputAction: TextInputAction.next,
                           //   focusNode:lastNameFocusNode,
                           validator: (value) {
                             if (value == null) {
@@ -462,55 +493,90 @@ class _PdfPageState extends State<PdfPage> {
                   child: ButtonWidget(
                     text: 'Invoice PDF',
                     onClicked: () async {
-                      final date = DateTime.now();
-                      final dueDate = date.add(Duration(days: 7));
+                      showDialog(
 
-                      final invoice = Invoice(
-                          quotation: Quotation(
-                              quotationNumber:
-                                  quotationNumberController.text.toString(),
-                              client: clientNameController.text.toString(),
-                              attentionOf:
-                                  attentionOfController.text.toString(),
-                              correspondingAddress:
-                                  addressController.text.toString(),
-                              siteName: siteNameController.text.toString(),
-                              quoteDate: quoteDateController.text.toString(),
-                              quoteNumber:
-                                  quoteNumberController.text.toString(),
-                              jobDescription:
-                                  jobDescriptionController.text.toString(),
-                              jobLocation:
-                                  jobLocationController.text.toString(),
-                              name: clientNameController.text.toString(),
-                              date: dateController.text.toString(),
-                              signed: clientNameController.text.toString(),
-                              position: positionController.text.toString(),
-                              purchedOrderNumber: purchaseOrderNumberController
-                                  .text
-                                  .toString()),
-                          supplier: Supplier(
-                            name: 'Sarah Field',
-                            address: 'Sarah Street 9, Beijing, China',
-                            paymentInfo: 'https://paypal.me/sarahfieldzz',
-                          ),
-                          customer: Customer(
-                            name: 'Apple Inc.',
-                            address: 'Apple Street, Cupertino, CA 95014',
-                          ),
-                          info: InvoiceInfo(
-                            date: date,
-                            dueDate: dueDate,
-                            description: 'My description...',
-                            number: '${DateTime.now().year}-9999',
-                          ),
-                          items: itemList);
+                          context: context, builder:(context){
+                        return  AlertDialog(
+                          backgroundColor: Colors.white70,
+                          title: Text("Enter File Name"),
+                          content: Container(
 
-                      final pdfFile = await PdfInvoiceApi.generate(
-                        invoice,
-                      );
+                            height: MediaQuery.of(context).size.height * 0.20,
+                            child: Column(
+                              children: [
 
-                      PdfApi.openFile(pdfFile);
+                                CustomeTextField(
+                                  textInputAction: TextInputAction.next,
+                                  validator: (value) {},
+                                  controller: fileNameController,
+                                  hintText: "File Name",
+                                ),
+                                SizedBox(height: 25,),
+                                ButtonWidget(
+                                  text: 'Done',
+                                  onClicked: ()async{
+                                    if(fileNameController.text.isNotEmpty){
+                                      final date = DateTime.now();
+                                      final dueDate = date.add(Duration(days: 7));
+
+                                      final invoice = Invoice(
+                                          quotation: Quotation(
+                                            fileName: fileNameController.text.toString(),
+                                              quotationDetails:quotationDetailsController.text.toString(),
+                                              customerName:customerNameController.text.toString(),
+                                              quotationNumber:
+                                              quotationNumberController.text.toString(),
+                                              client: clientNameController.text.toString(),
+                                              attentionOf:
+                                              attentionOfController.text.toString(),
+                                              correspondingAddress:
+                                              addressController.text.toString(),
+                                              siteName: siteNameController.text.toString(),
+                                              quoteDate: quoteDateController.text.toString(),
+                                              quoteNumber:
+                                              quoteNumberController.text.toString(),
+                                              jobDescription:
+                                              jobDescriptionController.text.toString(),
+                                              jobLocation:
+                                              jobLocationController.text.toString(),
+                                              name: clientNameController.text.toString(),
+                                              date: dateController.text.toString(),
+                                              signed: clientNameController.text.toString(),
+                                              position: positionController.text.toString(),
+                                              purchedOrderNumber: purchaseOrderNumberController
+                                                  .text
+                                                  .toString()),
+                                          supplier: Supplier(
+                                            name: 'Sarah Field',
+                                            address: 'Sarah Street 9, Beijing, China',
+                                            paymentInfo: 'https://paypal.me/sarahfieldzz',
+                                          ),
+                                          customer: Customer(
+                                            name: 'Apple Inc.',
+                                            address: 'Apple Street, Cupertino, CA 95014',
+                                          ),
+                                          info: InvoiceInfo(
+                                            date: date,
+                                            dueDate: dueDate,
+                                            description: 'My description...',
+                                            number: '${DateTime.now().year}-9999',
+                                          ),
+                                          items: itemList);
+
+                                      final pdfFile = await PdfInvoiceApi.generate(
+                                        invoice,
+                                      );
+
+                                      PdfApi.openFile(pdfFile);
+                                    }
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }) ;
+
                     },
                   ),
                 ),
@@ -520,4 +586,7 @@ class _PdfPageState extends State<PdfPage> {
         ),
       );
   bool x = false;
+
+
+  TextEditingController fileNameController=TextEditingController();
 }

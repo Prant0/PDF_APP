@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   pdf: ^3.1.0
   path_provider: ^2.0.1
+  telephony:
 
     # open pdf document
   open_file: ^3.1.0

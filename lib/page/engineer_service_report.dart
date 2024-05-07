@@ -13,7 +13,6 @@ class EngineerServiceReport extends StatefulWidget {
 
 class _EngineerServiceReportState extends State<EngineerServiceReport> {
   TextEditingController cityJobRefController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController clientJobController = TextEditingController();
   TextEditingController clientNameController = TextEditingController();
@@ -29,13 +28,14 @@ class _EngineerServiceReportState extends State<EngineerServiceReport> {
   TextEditingController customerCommentsController = TextEditingController();
   TextEditingController engineerNameController = TextEditingController();
   TextEditingController extraCommentsController = TextEditingController();
+  TextEditingController customerNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white.withOpacity(0.85),
         appBar: AppBar(
-          title: Text("ENGINEER SERVICE REPORT"),
+          title: Text("SERVICE REPORT"),
           centerTitle: true,
         ),
         body: Container(
@@ -53,19 +53,6 @@ class _EngineerServiceReportState extends State<EngineerServiceReport> {
                   },
                   controller: cityJobRefController,
                   hintText: "City Job Ref",
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                CustomeTextField(
-                  textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value == null) {
-                      return "name";
-                    }
-                  },
-                  controller: nameController,
-                  hintText: "Enter Name",
                 ),
                 SizedBox(
                   height: 12,
@@ -123,7 +110,7 @@ class _EngineerServiceReportState extends State<EngineerServiceReport> {
                   height: 12,
                 ),
                 CustomeTextField(
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.newline,
                   validator: (value) {
                     if (value == null) {
                       return "Site Address";
@@ -315,64 +302,124 @@ class _EngineerServiceReportState extends State<EngineerServiceReport> {
                 SizedBox(
                   height: 12,
                 ),
-               CustomeTextField(
-                 textInputAction: TextInputAction.newline,
+                CustomeTextField(
+                  textInputAction: TextInputAction.newline,
                   validator: (value) {
                     if (value == null) {
-                      return "Engineer Report";
+                      return "Engineer Service Report";
                     }
                   },
                   controller: engineerReportController,
-                  hintText: "Engineer Report",
+                  hintText: "Service Report",
                 ),
-
                 SizedBox(
                   height: 12,
                 ),
                 CustomeTextField(
                   textInputAction: TextInputAction.next,
-                  validator: (value) {
-
-                  },
+                  validator: (value) {},
                   controller: partsUsedController,
                   hintText: "Parts Used If Applicable",
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 12,
                 ),
                 CustomeTextField(
-                  textInputAction: TextInputAction.next,
-                  validator: (value) {
-
-                  },
+                  textInputAction: TextInputAction.newline,
+                  validator: (value) {},
                   controller: customerCommentsController,
                   hintText: "Customer Comments",
                 ),
-
-                 SizedBox(
+                SizedBox(
                   height: 12,
                 ),
                 CustomeTextField(
                   textInputAction: TextInputAction.next,
-                  validator: (value) {
-
-                  },
+                  validator: (value) {},
+                  controller: customerNameController,
+                  hintText: "Customer Name",
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                CustomeTextField(
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {},
                   controller: engineerNameController,
                   hintText: "Engineer Name",
                 ),
-   SizedBox(
+                SizedBox(
                   height: 12,
                 ),
-
-
-
-
                 ButtonWidget(
                   text: 'Create PDF',
                   onClicked: () async {
-                    var reportModel = ReportModel(
+                    showDialog(
+
+                        context: context, builder:(context){
+                      return  AlertDialog(
+                        backgroundColor: Colors.white70,
+                        title: Text("Enter File Name"),
+                        content: Container(
+
+                        height: MediaQuery.of(context).size.height * 0.20,
+                          child: Column(
+                            children: [
+
+                              CustomeTextField(
+                                textInputAction: TextInputAction.next,
+                                validator: (value) {},
+                                controller: fileNameController,
+                                hintText: "File Name",
+                              ),
+                              SizedBox(height: 25,),
+                          ButtonWidget(
+                            text: 'Done',
+                          onClicked: ()async{
+                              if(fileNameController.text.isNotEmpty){
+                                var reportModel = ReportModel(
+                                  fileName: fileNameController.text.toString(),
+                                  date: dateController.text.toString(),
+                                  customerName: customerNameController.text.toString(),
+                                  jobDescription: jobDescriptionController.text.toString(),
+                                  cityJobRef: cityJobRefController.text.toString(),
+                                  clientJob: clientJobController.text.toString(),
+                                  clientName: clientNameController.text.toString(),
+                                  engineerReport: engineerReportController.text.toString(),
+                                  siteAddress: siteAddressController.text.toString(),
+                                  siteContact: siteContactController.text.toString(),
+                                  telNo: telNoController.text.toString(),
+                                  travelFinishTime: travelEndTimeController.text.toString(),
+                                  travelStartTime:
+                                  travelStartTimeController.text.toString(),
+                                  travelTotalTime:
+                                  travelTotalTimeController.text.toString(),
+                                  isInstallation: isInstallation,
+                                  isRepairCallOut: isRepair,
+                                  isService: isService,
+                                  isWarrenty: isWarrenty,
+                                  isRepair2: isRepair2,
+                                  partsUsedIfApplicable:
+                                  partsUsedController.text.toString(),
+                                  customerComments:
+                                  customerCommentsController.text.toString(),
+                                  engineerName: engineerNameController.text.toString(),
+                                  extraText: extraCommentsController.text.toString(),
+                                );
+                                final pdfFile = await PdfReportApi.generate(reportModel);
+
+                                PdfApi.openFile(pdfFile);
+                              }
+                          },
+                          )
+                            ],
+                          ),
+                        ),
+                      );
+                    }) ;
+                   /* var reportModel = ReportModel(
                       date: dateController.text.toString(),
-                      name: nameController.text.toString(),
+                      customerName: customerNameController.text.toString(),
                       jobDescription: jobDescriptionController.text.toString(),
                       cityJobRef: cityJobRefController.text.toString(),
                       clientJob: clientJobController.text.toString(),
@@ -391,24 +438,26 @@ class _EngineerServiceReportState extends State<EngineerServiceReport> {
                       isService: isService,
                       isWarrenty: isWarrenty,
                       isRepair2: isRepair2,
-
-                      partsUsedIfApplicable: partsUsedController.text.toString(),
-                      customerComments: customerCommentsController.text.toString(),
+                      partsUsedIfApplicable:
+                          partsUsedController.text.toString(),
+                      customerComments:
+                          customerCommentsController.text.toString(),
                       engineerName: engineerNameController.text.toString(),
                       extraText: extraCommentsController.text.toString(),
-
                     );
                     final pdfFile = await PdfReportApi.generate(reportModel);
 
-                    PdfApi.openFile(pdfFile);
+                    PdfApi.openFile(pdfFile);*/
                   },
                 ),
               ],
             ),
           ),
         ));
+
   }
 
+  TextEditingController fileNameController=TextEditingController();
   bool isRepair = false;
   bool isRepair2 = false;
   bool isService = false;
